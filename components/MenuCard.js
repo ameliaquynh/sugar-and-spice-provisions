@@ -55,7 +55,7 @@ export default function MenuCard({ item }) {
         )}
 
         {!soldOut && (
-          <div className="flex flex-wrap items-center gap-3 mt-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-4">
             <div className="flex items-center gap-1">
               <button
                 type="button"
@@ -75,7 +75,11 @@ export default function MenuCard({ item }) {
                 +
               </button>
             </div>
-            <button type="button" onClick={handleAdd} className="btn-pill flex-1 min-w-[140px]">
+            <button
+              type="button"
+              onClick={handleAdd}
+              className="btn-pill w-full sm:w-auto sm:flex-1"
+            >
               {justAdded ? "Added!" : "Add to Cart"}
             </button>
           </div>
