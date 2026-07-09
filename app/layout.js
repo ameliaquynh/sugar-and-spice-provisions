@@ -2,6 +2,8 @@ import { Playfair_Display, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import CartDrawer from "@/components/CartDrawer";
+import { CartProvider } from "@/context/CartContext";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -26,9 +28,12 @@ export default function RootLayout({ children }) {
       className={`${playfair.variable} ${nunitoSans.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-cream text-espresso font-sans antialiased">
-        <Nav />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Nav />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

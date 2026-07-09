@@ -1,13 +1,32 @@
 "use client";
 
 import { useState } from "react";
-import { FORMSPREE_FORM_ID, VENMO_HANDLE } from "@/lib/siteConfig";
+import { siteConfig } from "@/lib/siteConfig";
+import { useCart } from "@/context/CartContext";
+import { summarizeCartForOrder } from "@/lib/cart";
+import { formatPrice } from "@/lib/parsePrice";
 
-const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
+const FORMSPREE_ENDPOINT = `https://formspree.io/f/${siteConfig.formspreeFormId}`;
 
 export default function OrderForm() {
   const [fulfillment, setFulfillment] = useState("pickup");
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
+  const { items: cartItems, subtotal, hydrated, clearCart } = useCart();
+
+  const [orderText, setOrderText] = useState("");
+  const [prefilledFromHydration, setPrefilledFromHydration] = useState(false);
+
+  // The cart loads from localStorage a moment after mount (see
+  // CartContext), so the first render or two still show hydrated=false.
+  // Once it flips to true, adjust orderText right here during render —
+  // React re-renders immediately rather than committing an extra effect
+  // pass — but only the first time, so it never overwrites later typing.
+  if (hydrated && !prefilledFromHydration) {
+    setPrefilledFromHydration(true);
+    if (cartItems.length > 0) {
+      setOrderText(summarizeCartForOrder(cartItems));
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -27,6 +46,8 @@ export default function OrderForm() {
         setStatus("success");
         form.reset();
         setFulfillment("pickup");
+        clearCart();
+        setOrderText("");
       } else {
         setStatus("error");
       }
@@ -41,8 +62,8 @@ export default function OrderForm() {
         <h2 className="font-serif text-2xl mb-4">Thank you!</h2>
         <p className="text-espresso/80 leading-relaxed">
           We&rsquo;ll confirm your order by email or text. Payment: Venmo{" "}
-          <span className="font-semibold">{VENMO_HANDLE}</span> or cash on
-          pickup/delivery.
+          <span className="font-semibold">{siteConfig.venmoHandle}</span> or
+          cash on pickup/delivery.
         </p>
       </div>
     );
@@ -57,12 +78,23 @@ export default function OrderForm() {
         required
         placeholder="How should we reach you?"
       />
-      <TextArea
-        label="What would you like to order?"
-        name="order"
-        required
-        placeholder="e.g. 1 dozen chocolate chip cookies"
-      />
+
+      <div className="flex flex-col gap-2">
+        {cartItems.length > 0 && (
+          <p className="text-xs text-espresso/60">
+            Prefilled from your cart &middot; Subtotal:{" "}
+            {formatPrice(subtotal)} (informational only)
+          </p>
+        )}
+        <TextArea
+          key={orderText}
+          label="What would you like to order?"
+          name="order"
+          required
+          defaultValue={orderText}
+          placeholder="e.g. 1 dozen chocolate chip cookies"
+        />
+      </div>
 
       <fieldset>
         <legend className="eyebrow mb-3">Pickup or Delivery</legend>
@@ -107,11 +139,11 @@ export default function OrderForm() {
           />
         </>
       ) : (
-        <Field
-          label="Preferred pickup date/time"
+        <Select
+          label="Preferred pickup time"
           name="pickupTime"
           required
-          placeholder="e.g. Saturday around 11am"
+          options={siteConfig.pickupTimeSlots}
         />
       )}
 
@@ -159,7 +191,7 @@ function Field({ label, name, required, placeholder }) {
   );
 }
 
-function TextArea({ label, name, required, placeholder }) {
+function TextArea({ label, name, required, placeholder, defaultValue }) {
   return (
     <label className="flex flex-col gap-2">
       <span className="eyebrow">
@@ -170,9 +202,36 @@ function TextArea({ label, name, required, placeholder }) {
         name={name}
         required={required}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         rows={3}
         className="rounded-lg border border-espresso/20 bg-white px-4 py-3 text-espresso placeholder:text-espresso/40 focus:outline-none focus:border-cinnamon resize-y"
       />
+    </label>
+  );
+}
+
+function Select({ label, name, required, options }) {
+  return (
+    <label className="flex flex-col gap-2">
+      <span className="eyebrow">
+        {label}
+        {required ? " *" : ""}
+      </span>
+      <select
+        name={name}
+        required={required}
+        defaultValue=""
+        className="rounded-lg border border-espresso/20 bg-white px-4 py-3 text-espresso focus:outline-none focus:border-cinnamon"
+      >
+        <option value="" disabled>
+          Choose a pickup time
+        </option>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     </label>
   );
 }

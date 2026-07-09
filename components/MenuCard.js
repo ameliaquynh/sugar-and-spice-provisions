@@ -1,7 +1,21 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+import { useCart } from "@/context/CartContext";
 
 export default function MenuCard({ item }) {
   const soldOut = !item.available;
+  const { addItem } = useCart();
+  const [qty, setQty] = useState(1);
+  const [justAdded, setJustAdded] = useState(false);
+
+  function handleAdd() {
+    addItem(item, qty);
+    setQty(1);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1500);
+  }
 
   return (
     <div
@@ -38,6 +52,33 @@ export default function MenuCard({ item }) {
           <p className="text-xs text-espresso/60 mt-2">
             Contains: {item.allergens.join(", ")}
           </p>
+        )}
+
+        {!soldOut && (
+          <div className="flex flex-wrap items-center gap-3 mt-4">
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+                aria-label={`Decrease quantity for ${item.name}`}
+                className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full border border-espresso/20 hover:border-cinnamon text-lg"
+              >
+                &minus;
+              </button>
+              <span className="w-8 text-center">{qty}</span>
+              <button
+                type="button"
+                onClick={() => setQty((q) => q + 1)}
+                aria-label={`Increase quantity for ${item.name}`}
+                className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full border border-espresso/20 hover:border-cinnamon text-lg"
+              >
+                +
+              </button>
+            </div>
+            <button type="button" onClick={handleAdd} className="btn-pill flex-1 min-w-[140px]">
+              {justAdded ? "Added!" : "Add to Cart"}
+            </button>
+          </div>
         )}
       </div>
     </div>
