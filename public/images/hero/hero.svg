@@ -7,7 +7,5 @@
     </linearGradient>
   </defs>
   <rect width="1600" height="900" fill="url(#heroBg)"/>
-  <circle cx="800" cy="430" r="230" fill="#FBF6EC" stroke="#D4A537" stroke-width="3"/>
-  <text x="800" y="420" text-anchor="middle" font-family="Georgia, serif" font-size="42" fill="#3A2A1E">Mom &amp; Millie, Baking Together</text>
-  <text x="800" y="470" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="22" fill="#3A2A1E" opacity="0.6">hero photo coming soon</text>
+  <circle cx="800" cy="430" r="230" fill="#FBF6EC" fill-opacity="0.5" stroke="#D4A537" stroke-width="3"/>
 </svg>

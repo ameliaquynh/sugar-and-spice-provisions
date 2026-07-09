@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import { parsePrice } from "@/lib/parsePrice";
 
 const CartContext = createContext(null);
@@ -10,6 +11,19 @@ export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const pathname = usePathname();
+  const [lastPathname, setLastPathname] = useState(pathname);
+
+  // Belt-and-suspenders close: whichever link or button sent the user to a
+  // new page (Checkout, a nav link, browser back/forward), the drawer
+  // should never still be covering the page they land on. Adjusting state
+  // during render (rather than in an effect) closes it in the same render
+  // pass as the navigation, so there's no visible frame where it's still
+  // open on the new page.
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     // Reading localStorage during render would crash on the server and
