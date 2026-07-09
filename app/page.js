@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import MenuGrid from "@/components/MenuGrid";
-import menu from "@/data/menu.json";
+import { getMenuItems } from "@/lib/getMenu";
+import { siteConfig } from "@/lib/siteConfig";
 
-export default function Home() {
+export default async function Home() {
+  const menu = await getMenuItems();
   const featured = menu.slice(0, 3);
 
   return (
@@ -18,7 +20,7 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-espresso/25" />
         <div className="relative z-10 text-center px-6">
-          <p className="eyebrow text-cream mb-4">A Mom &amp; Daughter Home Bakery</p>
+          <p className="eyebrow text-cream mb-4">{siteConfig.tagline}</p>
           <h1 className="font-serif text-cream text-4xl sm:text-5xl md:text-6xl leading-tight mb-8">
             Sugar &amp; Spice Provisions
           </h1>
