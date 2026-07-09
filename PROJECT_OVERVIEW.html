@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sugar & Spice Provisions — Project Overview</title>
+<style>
+  :root {
+    --cream: #FBF6EC;
+    --espresso: #3A2A1E;
+    --cinnamon: #C1633D;
+    --blush: #EFC6C0;
+    --gold: #D4A537;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--espresso);
+    font-family: 'Nunito Sans', -apple-system, Segoe UI, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+  header { text-align: center; margin-bottom: 48px; }
+  header .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 13px;
+    color: var(--cinnamon);
+    font-weight: 700;
+  }
+  h1 {
+    font-family: Georgia, 'Playfair Display', serif;
+    font-size: 42px;
+    margin: 8px 0 12px;
+  }
+  header p { font-size: 17px; max-width: 560px; margin: 0 auto; }
+  .live-badge {
+    display: inline-block;
+    margin-top: 16px;
+    background: var(--espresso);
+    color: var(--cream);
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+  .divider {
+    border: none;
+    border-top: 2px solid var(--gold);
+    width: 80px;
+    margin: 56px auto;
+  }
+  h2 {
+    font-family: Georgia, 'Playfair Display', serif;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    text-align: center;
+    color: #7a6a5c;
+    margin-bottom: 32px;
+    font-size: 15px;
+  }
+  .section-sub.small { margin-bottom: 18px; font-size: 14px; }
+  .phase-heading {
+    font-family: Georgia, 'Playfair Display', serif;
+    font-size: 22px;
+    text-align: center;
+    margin: 44px 0 4px;
+  }
+  .phase-heading.first { margin-top: 0; }
+  .skip-note {
+    background: #F3EDE3;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 13.5px;
+    color: #6b5a4c;
+    margin-top: 20px;
+    text-align: center;
+  }
+  .skip-note strong { color: var(--espresso); }
+  .tag.later { background: #E6E1F0; color: #5B4A8C; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 10px rgba(58,42,30,0.06);
+    border-top: 4px solid var(--blush);
+  }
+  .card.live { border-top-color: var(--cinnamon); }
+  .card h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-family: Georgia, 'Playfair Display', serif;
+  }
+  .card p { margin: 0; font-size: 14.5px; color: #5c4a3c; }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .tag.done { background: #E4EFE2; color: #3F6B3A; }
+  .tag.idea { background: var(--blush); color: #8C4A44; }
+  .tag.deciding { background: #FDEFD3; color: #8C6A1E; }
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 13.5px;
+    color: #8a7a6c;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Sugar & Spice Provisions</div>
+    <h1>What We're Building</h1>
+    <p>A running picture of the site — what's live right now, and everything we're planning to add for v2.0.</p>
+    <a class="live-badge" href="https://sugar-and-spice-provisions.vercel.app/" target="_blank">🌐 See the live site</a>
+  </header>
+
+  <h2>What's Live Right Now (v1.0)</h2>
+  <p class="section-sub">This is already built and deployed.</p>
+  <div class="grid">
+    <div class="card live">
+      <span class="tag done">Live</span>
+      <h3>4 Pages</h3>
+      <p>Home, Menu, About, and Order — all built and connected.</p>
+    </div>
+    <div class="card live">
+      <span class="tag done">Live</span>
+      <h3>Menu with Allergen Tags</h3>
+      <p>Each item shows a photo, description, price, and a "Contains: ..." allergen tag. Sold-out items gray out automatically.</p>
+    </div>
+    <div class="card live">
+      <span class="tag done">Live</span>
+      <h3>Order Form</h3>
+      <p>Customers choose pickup or delivery, fill in their info, and note allergies — it emails Mom the order.</p>
+    </div>
+    <div class="card live">
+      <span class="tag done">Live</span>
+      <h3>Our Story Section</h3>
+      <p>A little bit about Millie & Mom and why they started baking together.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2>The Plan for v2.0</h2>
+  <p class="section-sub">Everything we brainstormed, sorted into what we're building next vs. later.</p>
+
+  <h3 class="phase-heading first">🔨 Phase 1 — Building Next</h3>
+  <p class="section-sub small">The core upgrades that make the site actually work well day-to-day.</p>
+  <div class="grid">
+
+    <div class="card">
+      <span class="tag idea">Next</span>
+      <h3>Shopping Cart</h3>
+      <p>Add items from the menu, see everything in your cart, change quantities, remove things, add special instructions per item, and see a running total. (Total is informational — payment is still Venmo/cash.)</p>
+    </div>
+
+    <div class="card">
+      <span class="tag idea">Next</span>
+      <h3>Admin Tools</h3>
+      <p>An easy way for Mom & Millie to update what's available — no code needed. A Google Sheet feeds the menu directly.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag deciding">Deciding</span>
+      <h3>Photo Hosting for the Sheet</h3>
+      <p>How photos get into that Google Sheet menu — leaning toward Google Drive links (simple, free), with Cloudinary as a sturdier option later.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag idea">Next</span>
+      <h3>Pickup Time Slots</h3>
+      <p>Pick from real available windows instead of typing a preferred time — keeps orders manageable.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag idea">Next</span>
+      <h3>Order Scheduling</h3>
+      <p>A real order-by / pickup cadence (like "order by Thursday for weekend pickup") shown right on the site.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag idea">Next</span>
+      <h3>Menu Category Filters</h3>
+      <p>Quick filters (Cookies / Breads / Cakes) so browsing the menu is faster.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag idea">Next</span>
+      <h3>Real Content</h3>
+      <p>Swap placeholder photos for real ones, add the real Instagram handle, Venmo handle, and Formspree ID.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag idea">Next</span>
+      <h3>Mobile Pass</h3>
+      <p>Most visitors will be on their phones — give the whole site a real mobile-friendly check and polish.</p>
+    </div>
+
+  </div>
+
+  <h3 class="phase-heading">🌱 Phase 2 — Later</h3>
+  <p class="section-sub small">Trust-building and polish, once the core is solid and there are real orders.</p>
+  <div class="grid">
+
+    <div class="card">
+      <span class="tag later">Later</span>
+      <h3>Trust & FAQ</h3>
+      <p>A FAQ (delivery area, lead time, allergen info) and a simple "How It Works" 1-2-3 strip so first-time visitors feel comfortable ordering.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag later">Later</span>
+      <h3>Reviews & Testimonials</h3>
+      <p>Customer name, what they ordered, maybe a photo — needs real customers first, but it's a big trust builder.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag later">Later</span>
+      <h3>Customer Favorite Badges</h3>
+      <p>Highlight top-selling items once we know what actually sells.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag later">Later</span>
+      <h3>Delivery Fee Transparency</h3>
+      <p>If a delivery fee ever gets added, show it up front in the cart — never as a surprise at the end.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag later">Later</span>
+      <h3>Site Polish</h3>
+      <p>A favicon/logo mark, a nice preview image for when the link is shared, and a background music toggle button.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag later">Later</span>
+      <h3>Meet the Baker</h3>
+      <p>A personal bio section with photos of Millie & Mom — people like buying from people!</p>
+    </div>
+
+  </div>
+
+  <div class="skip-note">
+    <strong>Deliberately skipping:</strong> customer accounts/login, live online payment (Stripe/Apple Pay), real-time order-tracking dashboards. That's the big-platform playbook (Uber Eats, etc.) — more complexity than this site needs. Formspree + Venmo/cash stays the plan.
+  </div>
+
+  <footer>
+    Next step: Phase 1 turns into the v2.0 build prompt for Claude Code. Phase 2 waits until the core is live and working.
+  </footer>
+
+</div>
+</body>
+</html>
