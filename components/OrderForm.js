@@ -4,29 +4,14 @@ import { useState } from "react";
 import { siteConfig } from "@/lib/siteConfig";
 import { useCart } from "@/context/CartContext";
 import { summarizeCartForOrder } from "@/lib/cart";
-import { formatPrice } from "@/lib/parsePrice";
+import OrderSummary from "@/components/OrderSummary";
 
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${siteConfig.formspreeFormId}`;
 
 export default function OrderForm() {
   const [fulfillment, setFulfillment] = useState("pickup");
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
-  const { items: cartItems, subtotal, hydrated, clearCart } = useCart();
-
-  const [orderText, setOrderText] = useState("");
-  const [prefilledFromHydration, setPrefilledFromHydration] = useState(false);
-
-  // The cart loads from localStorage a moment after mount (see
-  // CartContext), so the first render or two still show hydrated=false.
-  // Once it flips to true, adjust orderText right here during render —
-  // React re-renders immediately rather than committing an extra effect
-  // pass — but only the first time, so it never overwrites later typing.
-  if (hydrated && !prefilledFromHydration) {
-    setPrefilledFromHydration(true);
-    if (cartItems.length > 0) {
-      setOrderText(summarizeCartForOrder(cartItems));
-    }
-  }
+  const { items: cartItems, clearCart } = useCart();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -47,7 +32,6 @@ export default function OrderForm() {
         form.reset();
         setFulfillment("pickup");
         clearCart();
-        setOrderText("");
       } else {
         setStatus("error");
       }
@@ -70,106 +54,104 @@ export default function OrderForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <Field label="Name" name="name" required />
-      <Field
-        label="Email or phone"
-        name="contact"
-        required
-        placeholder="How should we reach you?"
-      />
+    <div className="flex flex-col gap-8">
+      <OrderSummary />
 
-      <div className="flex flex-col gap-2">
-        {cartItems.length > 0 && (
-          <p className="text-xs text-espresso/60">
-            Prefilled from your cart &middot; Subtotal:{" "}
-            {formatPrice(subtotal)} (informational only)
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <Field label="Name" name="name" required />
+        <Field
+          label="Email or phone"
+          name="contact"
+          required
+          placeholder="How should we reach you?"
+        />
+
+        {cartItems.length > 0 ? (
+          <input type="hidden" name="order" value={summarizeCartForOrder(cartItems)} />
+        ) : (
+          <TextArea
+            label="What would you like to order?"
+            name="order"
+            required
+            placeholder="e.g. 1 dozen chocolate chip cookies"
+          />
+        )}
+
+        <fieldset>
+          <legend className="eyebrow mb-3">Pickup or Delivery</legend>
+          <div className="flex gap-8">
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="fulfillment"
+                value="pickup"
+                checked={fulfillment === "pickup"}
+                onChange={() => setFulfillment("pickup")}
+                className="accent-cinnamon"
+              />
+              Pickup
+            </label>
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="fulfillment"
+                value="delivery"
+                checked={fulfillment === "delivery"}
+                onChange={() => setFulfillment("delivery")}
+                className="accent-cinnamon"
+              />
+              Delivery
+            </label>
+          </div>
+        </fieldset>
+
+        {fulfillment === "delivery" ? (
+          <>
+            <Field
+              label="Delivery address"
+              name="deliveryAddress"
+              required
+              placeholder="Where should we bring it?"
+            />
+            <TextArea
+              label="Delivery notes"
+              name="deliveryNotes"
+              placeholder="Gate code, best time, anything else that helps"
+            />
+          </>
+        ) : (
+          <Select
+            label="Preferred pickup time"
+            name="pickupTime"
+            required
+            options={siteConfig.pickupTimeSlots}
+          />
+        )}
+
+        <TextArea
+          label="Allergies or dietary notes"
+          name="allergies"
+          placeholder="Anything we should know?"
+        />
+
+        <TextArea label="Comments" name="comments" />
+
+        {status === "error" && (
+          <p className="text-sm text-cinnamon">
+            Something went wrong sending your order. Please try again, or reach
+            out to us directly.
           </p>
         )}
-        <TextArea
-          key={orderText}
-          label="What would you like to order?"
-          name="order"
-          required
-          defaultValue={orderText}
-          placeholder="e.g. 1 dozen chocolate chip cookies"
-        />
-      </div>
 
-      <fieldset>
-        <legend className="eyebrow mb-3">Pickup or Delivery</legend>
-        <div className="flex gap-8">
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="radio"
-              name="fulfillment"
-              value="pickup"
-              checked={fulfillment === "pickup"}
-              onChange={() => setFulfillment("pickup")}
-              className="accent-cinnamon"
-            />
-            Pickup
-          </label>
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="radio"
-              name="fulfillment"
-              value="delivery"
-              checked={fulfillment === "delivery"}
-              onChange={() => setFulfillment("delivery")}
-              className="accent-cinnamon"
-            />
-            Delivery
-          </label>
-        </div>
-      </fieldset>
-
-      {fulfillment === "delivery" ? (
-        <>
-          <Field
-            label="Delivery address"
-            name="deliveryAddress"
-            required
-            placeholder="Where should we bring it?"
-          />
-          <TextArea
-            label="Delivery notes"
-            name="deliveryNotes"
-            placeholder="Gate code, best time, anything else that helps"
-          />
-        </>
-      ) : (
-        <Select
-          label="Preferred pickup time"
-          name="pickupTime"
-          required
-          options={siteConfig.pickupTimeSlots}
-        />
-      )}
-
-      <TextArea
-        label="Allergies or dietary notes"
-        name="allergies"
-        placeholder="Anything we should know?"
-      />
-
-      <TextArea label="Comments" name="comments" />
-
-      {status === "error" && (
-        <p className="text-sm text-cinnamon">
-          Something went wrong sending your order. Please try again, or reach
-          out to us directly.
-        </p>
-      )}
-
-      <button
-        type="submit"
-        disabled={status === "submitting"}
-        className="btn-pill self-start mt-2"
-      >
-        {status === "submitting" ? "Sending..." : "Submit Order"}
-      </button>
-    </form>
+        <button
+          type="submit"
+          disabled={status === "submitting"}
+          className="btn-pill self-start mt-2"
+        >
+          {status === "submitting" ? "Sending..." : "Submit Order"}
+        </button>
+      </form>
+    </div>
   );
 }
 
