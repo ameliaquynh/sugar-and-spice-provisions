@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" role="img" aria-label="Placeholder photo of cinnamon sugar snickerdoodles">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D4A537" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FBF6EC"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="450" fill="url(#bg2)"/>
+  <circle cx="240" cy="180" r="85" fill="#FBF6EC" stroke="#D4A537" stroke-width="2"/>
+  <circle cx="370" cy="210" r="85" fill="#FBF6EC" stroke="#D4A537" stroke-width="2"/>
+  <text x="300" y="340" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#3A2A1E">Cinnamon Sugar Snickerdoodles</text>
+  <text x="300" y="372" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="16" fill="#3A2A1E" opacity="0.6">photo coming soon</text>
+</svg>

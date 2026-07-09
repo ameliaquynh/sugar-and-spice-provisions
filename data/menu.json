@@ -1,0 +1,35 @@
+[
+  {
+    "id": "choc-chip-cookies",
+    "name": "Classic Chocolate Chip Cookies",
+    "description": "Soft-baked, gooey in the middle, a family recipe passed down from Grandma.",
+    "price": "$3 each / $15 dozen",
+    "photo": "/images/menu/choc-chip-cookies.svg",
+    "ingredients": ["flour", "butter", "eggs", "brown sugar", "chocolate chips", "vanilla"],
+    "allergens": ["gluten", "dairy", "eggs"],
+    "category": "Cookies",
+    "available": true
+  },
+  {
+    "id": "cinnamon-sugar-snickerdoodles",
+    "name": "Cinnamon Sugar Snickerdoodles",
+    "description": "Buttery, chewy, and rolled in cinnamon sugar right out of the oven.",
+    "price": "$3 each / $14 dozen",
+    "photo": "/images/menu/snickerdoodles.svg",
+    "ingredients": ["flour", "butter", "eggs", "sugar", "cinnamon", "cream of tartar"],
+    "allergens": ["gluten", "dairy", "eggs"],
+    "category": "Cookies",
+    "available": true
+  },
+  {
+    "id": "banana-bread-loaf",
+    "name": "Banana Bread Loaf",
+    "description": "Moist banana bread with a hint of cinnamon and a crackly sugar top.",
+    "price": "$10 per loaf",
+    "photo": "/images/menu/banana-bread.svg",
+    "ingredients": ["flour", "butter", "eggs", "bananas", "sugar", "walnuts"],
+    "allergens": ["gluten", "dairy", "eggs", "nuts"],
+    "category": "Breads",
+    "available": false
+  }
+]

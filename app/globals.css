@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-cream: #fbf6ec;
+  --color-espresso: #3a2a1e;
+  --color-cinnamon: #c1633d;
+  --color-blush: #efc6c0;
+  --color-gold: #d4a537;
+
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-nunito-sans);
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-espresso);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-cinnamon);
+}
+
+.hairline {
+  height: 1px;
+  width: 100%;
+  background: var(--color-gold);
+  opacity: 0.6;
+  border: none;
+}
+
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--color-cinnamon);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.9rem 2rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-pill:hover {
+  opacity: 0.88;
+}
+
+.btn-pill:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
